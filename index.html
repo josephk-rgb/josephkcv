@@ -535,14 +535,14 @@
     cursor: pointer;
   }
   .photo-item.is-hidden { display: none; }
-  .photo-item:not(.pano) img {
+  .photo-item img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: auto;
     display: block;
+    object-fit: contain;
     transition: transform 0.4s ease;
   }
-  .photo-item:not(.pano):hover img { transform: scale(1.03); }
+  .photo-item:hover img { transform: scale(1.03); }
   .photo-overlay {
     position: absolute; inset: 0;
     background: linear-gradient(to top, rgba(28,28,30,0.7) 0%, transparent 50%);
@@ -612,16 +612,8 @@
   .lightbox-prev { left: 16px; }
   .lightbox-next { right: 16px; }
 
-  /* Pano spans full width at natural height */
+  /* Pano spans full width */
   .photo-item.pano { grid-column: 1 / -1; }
-  .photo-item.pano img {
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-  }
 
   /* Category filters — responsive grid columns */
   .photo-grid.filter-active {
@@ -636,19 +628,16 @@
 
   @media (max-width: 1200px) {
     .photo-grid { grid-template-columns: repeat(4, 1fr); }
-    .photo-item:not(.pano) img { height: 180px; }
     .photo-grid.filter-active { grid-template-columns: repeat(3, 1fr); }
     .photo-grid.filter-active.filter-landscape { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 800px) {
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-item:not(.pano) img { height: 160px; }
     .photo-grid.filter-active,
     .photo-grid.filter-active.filter-landscape { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 500px) {
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-item:not(.pano) img { height: 140px; }
   }
 
 </style>
