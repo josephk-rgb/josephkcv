@@ -535,14 +535,14 @@
     cursor: pointer;
   }
   .photo-item.is-hidden { display: none; }
-  .photo-item img {
+  .photo-item:not(.pano) img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     display: block;
     transition: transform 0.4s ease;
   }
-  .photo-item:hover img { transform: scale(1.03); }
+  .photo-item:not(.pano):hover img { transform: scale(1.03); }
   .photo-overlay {
     position: absolute; inset: 0;
     background: linear-gradient(to top, rgba(28,28,30,0.7) 0%, transparent 50%);
@@ -612,22 +612,43 @@
   .lightbox-prev { left: 16px; }
   .lightbox-next { right: 16px; }
 
-  /* Pano spans full width on its row */
+  /* Pano spans full width at natural height */
   .photo-item.pano { grid-column: 1 / -1; }
-  .photo-item.pano img { height: 240px; object-fit: cover; object-position: center; width: 100%; }
+  .photo-item.pano img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  /* Category filters — responsive grid columns */
+  .photo-grid.filter-active {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .photo-grid.filter-active.filter-landscape {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .photo-grid.filter-active.filter-landscape .photo-item.pano {
+    grid-column: 1 / -1;
+  }
 
   @media (max-width: 1200px) {
     .photo-grid { grid-template-columns: repeat(4, 1fr); }
-    .photo-item img { height: 180px; }
+    .photo-item:not(.pano) img { height: 180px; }
+    .photo-grid.filter-active { grid-template-columns: repeat(3, 1fr); }
+    .photo-grid.filter-active.filter-landscape { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 800px) {
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-item img { height: 160px; }
-    .photo-item.pano img { height: 180px; }
+    .photo-item:not(.pano) img { height: 160px; }
+    .photo-grid.filter-active,
+    .photo-grid.filter-active.filter-landscape { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 500px) {
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-item img { height: 140px; }
+    .photo-item:not(.pano) img { height: 140px; }
   }
 
 </style>
@@ -640,10 +661,10 @@
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#work">Work</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
     <li><a href="#photography">Photography</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#presence">Content</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -855,6 +876,15 @@
       <div class="photo-mobile-caption"><div class="photo-cat">Landscape</div><div class="photo-caption">Dusk at the lakeshore</div></div>
     </div>
 
+    <!-- PANO LANDSCAPE -->
+    <div class="photo-item pano" data-cat="landscape" data-caption="Panoramic landscape" onclick="openLightbox(this)">
+      <img src="_MG_7142-Pano-2.jpg" alt="Panoramic landscape" loading="eager"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
+    </div>
+
     <!-- FASHION (b&w) -->
     <div class="photo-item" data-cat="fashion" data-caption="B&W fashion, Nairobi Railway" onclick="openLightbox(this)">
       <img src="2016-1.jpg" alt="BW fashion portrait" loading="lazy"/>
@@ -862,15 +892,6 @@
         <div><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
       </div>
       <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
-    </div>
-
-    <!-- PANO LANDSCAPE spans all columns -->
-    <div class="photo-item pano" data-cat="landscape" data-caption="Panoramic landscape" onclick="openLightbox(this)">
-      <img src="_MG_7142-Pano-2.jpg" alt="Panoramic landscape" loading="lazy"/>
-      <div class="photo-overlay">
-        <div><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
-      </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
     </div>
 
   </div>
@@ -1077,6 +1098,11 @@
   function filterPhotos(cat, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    const grid = document.getElementById('photoGrid');
+    grid.classList.remove('filter-active', 'filter-wildlife', 'filter-portrait', 'filter-film', 'filter-landscape', 'filter-fashion');
+    if (cat !== 'all') {
+      grid.classList.add('filter-active', 'filter-' + cat);
+    }
     document.querySelectorAll('.photo-item').forEach(item => {
       const show = cat === 'all' || item.dataset.cat === cat;
       item.classList.toggle('is-hidden', !show);
@@ -1084,10 +1110,9 @@
   }
 
   function openLightbox(el) {
-    visibleItems = Array.from(document.querySelectorAll('.photo-item:not(.is-hidden)')).filter(i => !i.classList.contains('pano'));
-    const nonPanoEl = el.classList.contains('pano') ? null : el;
-    if (!nonPanoEl) return; // don't lightbox pano
+    visibleItems = Array.from(document.querySelectorAll('.photo-item:not(.is-hidden)'));
     currentIdx = visibleItems.indexOf(el);
+    if (currentIdx === -1) return;
     showLightboxItem(currentIdx);
     document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
