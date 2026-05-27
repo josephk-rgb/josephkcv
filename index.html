@@ -522,10 +522,18 @@
     background: var(--green-l);
   }
 
-  /* Photo grid — 2-row layout for All view */
+  /* Photo grid — Favorites default (large 3-column), compact for categories */
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .photo-grid.filter-favorites {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .photo-grid.filter-active:not(.filter-favorites) {
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
   .photo-item {
@@ -616,28 +624,26 @@
   .photo-item.pano { grid-column: 1 / -1; }
 
   /* Category filters — responsive grid columns */
-  .photo-grid.filter-active {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .photo-grid.filter-active.filter-landscape {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .photo-grid.filter-active.filter-landscape .photo-item.pano {
     grid-column: 1 / -1;
   }
 
   @media (max-width: 1200px) {
-    .photo-grid { grid-template-columns: repeat(4, 1fr); }
-    .photo-grid.filter-active { grid-template-columns: repeat(3, 1fr); }
+    .photo-grid,
+    .photo-grid.filter-favorites { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid.filter-active:not(.filter-favorites) { grid-template-columns: repeat(3, 1fr); }
     .photo-grid.filter-active.filter-landscape { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 800px) {
-    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid,
+    .photo-grid.filter-favorites,
     .photo-grid.filter-active,
     .photo-grid.filter-active.filter-landscape { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 500px) {
-    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid,
+    .photo-grid.filter-favorites { grid-template-columns: 1fr; }
+    .photo-grid.filter-active:not(.filter-favorites) { grid-template-columns: repeat(2, 1fr); }
   }
 
 </style>
@@ -729,7 +735,7 @@
   </div>
 
   <div class="photo-filters reveal">
-    <button class="filter-btn active" onclick="filterPhotos('all', this)">All</button>
+    <button class="filter-btn active" onclick="filterPhotos('favorites', this)">Favorites</button>
     <button class="filter-btn" onclick="filterPhotos('wildlife', this)">Wildlife</button>
     <button class="filter-btn" onclick="filterPhotos('portrait', this)">Portraits</button>
     <button class="filter-btn" onclick="filterPhotos('film', this)">Film &amp; BTS</button>
@@ -740,7 +746,7 @@
   <div class="photo-grid" id="photoGrid">
 
     <!-- WILDLIFE -->
-    <div class="photo-item" data-cat="wildlife" data-caption="Leopard cub, Maasai Mara" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="wildlife" data-favorite="true" data-caption="Leopard cub, Maasai Mara" onclick="openLightbox(this)">
       <img src="4A1A3921-2.jpg" alt="Leopard in the bush" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Leopard cub, Maasai Mara</div></div>
@@ -749,7 +755,7 @@
     </div>
 
     <!-- PORTRAIT -->
-    <div class="photo-item" data-cat="portrait" data-caption="Portrait, Nairobi" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="portrait" data-favorite="true" data-caption="Portrait, Nairobi" onclick="openLightbox(this)">
       <img src="20170810-IMG_7074.jpg" alt="Portrait" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Portrait</div><div class="photo-caption">Portrait, Nairobi</div></div>
@@ -758,7 +764,7 @@
     </div>
 
     <!-- WILDLIFE -->
-    <div class="photo-item" data-cat="wildlife" data-caption="Lioness at golden hour, Mara" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="wildlife" data-favorite="true" data-caption="Lioness at golden hour, Mara" onclick="openLightbox(this)">
       <img src="4A1A4890-2.jpg" alt="Lioness golden hour" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness, golden hour</div></div>
@@ -767,7 +773,7 @@
     </div>
 
     <!-- FILM BTS -->
-    <div class="photo-item" data-cat="film" data-caption="On set, documentary shoot" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="film" data-favorite="true" data-caption="On set, documentary shoot" onclick="openLightbox(this)">
       <img src="film-set-bts.jpg" alt="Film set BTS" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">On set, documentary shoot</div></div>
@@ -803,7 +809,7 @@
     </div>
 
     <!-- LANDSCAPE -->
-    <div class="photo-item" data-cat="landscape" data-caption="Misty forest hills" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="landscape" data-favorite="true" data-caption="Misty forest hills" onclick="openLightbox(this)">
       <img src="2016-19.jpg" alt="Forest landscape" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Landscape</div><div class="photo-caption">Misty forest hills</div></div>
@@ -821,7 +827,7 @@
     </div>
 
     <!-- FASHION -->
-    <div class="photo-item" data-cat="fashion" data-caption="Fashion editorial, Nairobi" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="fashion" data-favorite="true" data-caption="Fashion editorial, Nairobi" onclick="openLightbox(this)">
       <img src="IMG_4409.jpg" alt="Fashion portrait" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion editorial, Nairobi</div></div>
@@ -830,7 +836,7 @@
     </div>
 
     <!-- PORTRAIT -->
-    <div class="photo-item" data-cat="portrait" data-caption="Nairobi nights" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="portrait" data-favorite="true" data-caption="Nairobi nights" onclick="openLightbox(this)">
       <img src="nairobi-nights-portrait.jpg" alt="Nairobi night portrait" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Portrait</div><div class="photo-caption">Nairobi nights</div></div>
@@ -839,7 +845,7 @@
     </div>
 
     <!-- FASHION -->
-    <div class="photo-item" data-cat="fashion" data-caption="Made in Kenya, fashion shoot" onclick="openLightbox(this)">
+    <div class="photo-item" data-cat="fashion" data-favorite="true" data-caption="Made in Kenya, fashion shoot" onclick="openLightbox(this)">
       <img src="IMG_5298.jpg" alt="Made in Kenya fashion" loading="lazy"/>
       <div class="photo-overlay">
         <div><div class="photo-cat">Fashion</div><div class="photo-caption">Made in Kenya</div></div>
@@ -1107,12 +1113,16 @@
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const grid = document.getElementById('photoGrid');
-    grid.classList.remove('filter-active', 'filter-wildlife', 'filter-portrait', 'filter-film', 'filter-landscape', 'filter-fashion');
-    if (cat !== 'all') {
+    grid.classList.remove('filter-active', 'filter-favorites', 'filter-wildlife', 'filter-portrait', 'filter-film', 'filter-landscape', 'filter-fashion');
+    if (cat === 'favorites') {
+      grid.classList.add('filter-favorites');
+    } else {
       grid.classList.add('filter-active', 'filter-' + cat);
     }
     document.querySelectorAll('.photo-item').forEach(item => {
-      const show = cat === 'all' || item.dataset.cat === cat;
+      const show = cat === 'favorites'
+        ? item.dataset.favorite === 'true'
+        : item.dataset.cat === cat;
       item.classList.toggle('is-hidden', !show);
     });
   }
@@ -1165,6 +1175,9 @@
     const diff = e.changedTouches[0].screenX - touchStartX;
     if (Math.abs(diff) > 50) navLightbox(diff > 0 ? -1 : 1);
   }, { passive: true });
+
+  // Show favorites on load (hide non-favorite items)
+  filterPhotos('favorites', document.querySelector('.filter-btn.active'));
 
 </script>
 </body>
