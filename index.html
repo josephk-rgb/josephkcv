@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Joseph K — Creative Marketer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Calibri:wght@300;400;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:  #2A5C45;
+    --green-l:#EAF1ED;
+    --cream:  #FAF8F5;
+    --ink:    #1C1C1E;
+    --mid:    #8A8A8E;
+    --rule:   #D6D3CE;
+    --paper:  #F7F5F2;
+    --white:  #FFFFFF;
+    --serif:  'EB Garamond', Georgia, serif;
+    --sans:   'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 72px;
+    padding-top: max(18px, env(safe-area-inset-top));
+    background: rgba(250,248,245,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    width: 44px; height: 44px; padding: 10px;
+    flex-direction: column; justify-content: center; gap: 5px;
+  }
+  .nav-toggle span {
+    display: block; width: 22px; height: 2px;
+    background: var(--ink); transition: transform 0.2s, opacity 0.2s;
+  }
+  nav.is-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  nav.is-open .nav-toggle span:nth-child(2) { opacity: 0; }
+  nav.is-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav-logo span { color: var(--green); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+
+  /* ── HERO ─────────────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    padding: 140px 72px 100px;
+    gap: 100px;
+    position: relative;
+  }
+  /* subtle green top bar mirroring CV */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--green);
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
+  }
+  .eyebrow-line { width: 32px; height: 1.5px; background: var(--green); }
+  .eyebrow-text {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 5.5vw, 6rem);
+    font-weight: 500;
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    opacity: 0; animation: fadeUp 0.8s 0.22s forwards;
+  }
+  .hero h1 em { color: var(--green); font-style: italic; }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 1rem;
+    color: var(--mid);
+    max-width: 460px;
+    line-height: 1.75;
+    font-weight: 300;
+    opacity: 0; animation: fadeUp 0.8s 0.38s forwards;
+  }
+
+  .hero-ctas {
+    margin-top: 48px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.52s forwards;
+  }
+  .btn-solid {
+    padding: 13px 30px;
+    background: var(--green); color: var(--white);
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.07em; text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-solid:hover { background: #1e4332; transform: translateY(-1px); }
+  .btn-ghost {
+    padding: 12px 30px;
+    border: 1.5px solid var(--rule); color: var(--ink);
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.07em; text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); }
+
+  /* hero right: stat cards */
+  .hero-stats {
+    display: flex; flex-direction: column; gap: 16px;
+    opacity: 0; animation: fadeUp 0.8s 0.62s forwards;
+  }
+  .stat {
+    padding: 28px 32px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .stat:hover { border-color: var(--green); }
+  .stat::after {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--green);
+  }
+  .stat-n {
+    font-family: var(--serif);
+    font-size: 2.8rem; font-weight: 500;
+    color: var(--ink); line-height: 1;
+  }
+  .stat-l { margin-top: 6px; font-size: 0.8rem; color: var(--mid); font-weight: 400; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ── SECTION BASE ─────────────────────────────────────────────── */
+  section { padding: 96px 72px; }
+  section.tinted { background: var(--paper); }
+
+  .sec-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .sec-label .line { width: 24px; height: 1.5px; background: var(--green); }
+  .sec-label span {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--green);
+  }
+  .sec-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    font-weight: 500; color: var(--ink);
+    line-height: 1.15; max-width: 600px;
+    margin-bottom: 56px;
+  }
+
+  /* ── SKILLS ───────────────────────────────────────────────────── */
+  .skills-table {
+    width: 100%; border-collapse: collapse;
+    border: 1px solid var(--rule);
+  }
+  .skills-table thead th {
+    background: var(--ink); color: var(--white);
+    font-family: var(--sans); font-weight: 500;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 14px 20px; text-align: left;
+    border-top: 3px solid var(--green);
+  }
+  .skills-table tbody td {
+    padding: 11px 20px;
+    font-size: 0.88rem; color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  .skills-table tbody tr:nth-child(even) td { background: #F7F9F8; }
+  .skills-table tbody tr:hover td { background: var(--green-l); }
+  .skills-table td[data-label]::before {
+    display: none;
+  }
+
+  /* ── WORK CARDS ───────────────────────────────────────────────── */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--white);
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: var(--green);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(42,92,69,0.08);
+  }
+  .card-body { padding: 32px 28px 24px; flex: 1; }
+  .card-tag {
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 14px;
+  }
+  .card h3 {
+    font-family: var(--serif);
+    font-size: 1.35rem; font-weight: 500;
+    color: var(--ink); line-height: 1.25; margin-bottom: 12px;
+  }
+  .card p {
+    font-size: 0.86rem; color: var(--mid);
+    line-height: 1.7; font-weight: 300;
+  }
+  .card-foot {
+    padding: 16px 28px;
+    border-top: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--cream);
+  }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--mid);
+    background: var(--rule);
+    padding: 3px 9px; border-radius: 20px;
+  }
+  .card-link {
+    font-size: 0.76rem; font-weight: 500;
+    color: var(--green); text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    white-space: nowrap; margin-left: 12px;
+    transition: gap 0.15s;
+  }
+  .card-link:hover { gap: 9px; }
+  .card-link::after { content: '→'; }
+
+  /* ── CALLOUT BAND ─────────────────────────────────────────────── */
+  .callout {
+    display: flex; gap: 0;
+    border-radius: 3px; overflow: hidden;
+    margin: 48px 0;
+  }
+  .callout-stripe { width: 5px; background: var(--green); flex-shrink: 0; }
+  .callout-body {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-left: none;
+    padding: 20px 28px;
+    flex: 1;
+  }
+  .callout-label {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 8px;
+  }
+  .callout-body p { font-size: 0.88rem; color: var(--ink); line-height: 1.65; }
+
+  /* ── TIMELINE ─────────────────────────────────────────────────── */
+  .timeline { max-width: 720px; }
+  .tl-item {
+    display: grid; grid-template-columns: 152px 1fr;
+    gap: 40px; padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-date { font-size: 0.76rem; color: var(--mid); padding-top: 4px; line-height: 1.5; }
+  .tl-right h4 {
+    font-family: var(--serif);
+    font-size: 1.15rem; font-weight: 500;
+    color: var(--ink); margin-bottom: 3px;
+  }
+  .tl-org {
+    font-size: 0.78rem; color: var(--green);
+    font-weight: 500; margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .tl-right ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .tl-right li {
+    font-size: 0.86rem; color: var(--mid);
+    line-height: 1.65; padding-left: 14px; position: relative;
+    font-weight: 300;
+  }
+  .tl-right li::before { content: '–'; position: absolute; left: 0; color: var(--green); }
+
+  /* ── PRESENCE CARDS ───────────────────────────────────────────── */
+  .presence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .pcard {
+    border: 1px solid var(--rule); border-radius: 3px;
+    padding: 26px 24px; text-decoration: none; color: var(--ink);
+    background: var(--white);
+    transition: border-color 0.2s, transform 0.15s;
+    display: block;
+  }
+  .pcard:hover { border-color: var(--green); transform: translateY(-2px); }
+  .pcard-plat {
+    font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 9px;
+  }
+  .pcard-name {
+    font-family: var(--serif);
+    font-size: 1.1rem; font-weight: 500;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .pcard-desc { font-size: 0.79rem; color: var(--mid); line-height: 1.55; font-weight: 300; }
+
+  /* ── CONTACT ──────────────────────────────────────────────────── */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .contact-left h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+    font-weight: 500; line-height: 1.2;
+    color: var(--ink); margin-bottom: 18px;
+  }
+  .contact-left p { font-size: 0.94rem; color: var(--mid); line-height: 1.75; margin-bottom: 28px; font-weight: 300; }
+  .contact-email {
+    font-family: var(--serif);
+    font-size: 1.3rem; font-weight: 500;
+    color: var(--green); text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .contact-email:hover { border-color: var(--green); }
+
+  .contact-rows { display: flex; flex-direction: column; }
+  .crow {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 0; border-bottom: 1px solid var(--rule);
+  }
+  .crow-label { font-size: 0.72rem; color: var(--mid); font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; }
+  .crow-val { font-size: 0.86rem; color: var(--ink); text-decoration: none; }
+  a.crow-val:hover { color: var(--green); }
+
+  /* ── FOOTER ───────────────────────────────────────────────────── */
+  footer {
+    padding: 28px 72px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: var(--mid);
+  }
+  footer::before {
+    content: '';
+    display: block;
+    position: absolute; left: 0; right: 0;
+    height: 3px; background: var(--green);
+    margin-top: -28px;
+  }
+  footer { position: relative; }
+
+  /* ── ANIMATIONS ───────────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────────── */
+  @media (max-width: 800px) {
+    nav { padding: 12px 20px; padding-top: max(12px, env(safe-area-inset-top)); }
+    .nav-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: rgba(250,248,245,0.98);
+      border-bottom: 1px solid var(--rule);
+      padding: 8px 0 16px;
+    }
+    nav.is-open .nav-links { display: flex; }
+    .nav-links li { border-top: 1px solid var(--rule); }
+    .nav-links a {
+      display: block; padding: 14px 24px;
+      font-size: 0.8rem;
+    }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 64px; gap: 48px; }
+    section { padding: 64px 24px; }
+    .tl-item { grid-template-columns: 1fr; gap: 6px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    footer {
+      flex-direction: column; gap: 10px; text-align: center;
+      padding: 24px; padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+    .stat-row { grid-template-columns: 1fr; }
+    .card-foot {
+      flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    .card-link { margin-left: 0; }
+    .crow {
+      flex-direction: column; align-items: flex-start; gap: 4px;
+    }
+    .skills-table thead { display: none; }
+    .skills-table, .skills-table tbody, .skills-table tr, .skills-table td {
+      display: block; width: 100%;
+    }
+    .skills-table tr {
+      margin-bottom: 12px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .skills-table td {
+      border-bottom: 1px solid var(--rule);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .skills-table td:last-child { border-bottom: none; }
+    .skills-table td[data-label]::before {
+      display: block;
+      content: attr(data-label);
+      font-weight: 500;
+      color: var(--green);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .filter-btn {
+      min-height: 44px;
+      padding: 10px 18px;
+    }
+    .lightbox-close {
+      top: max(16px, env(safe-area-inset-top));
+      right: 16px;
+      width: 44px; height: 44px;
+      font-size: 1.6rem;
+    }
+    .lightbox-nav {
+      font-size: 2.2rem;
+      padding: 20px;
+      min-width: 44px; min-height: 44px;
+    }
+    .photo-overlay { display: none; }
+    .photo-mobile-caption { display: block; }
+    body.nav-open { overflow: hidden; }
+  }
+
+  /* ── PHOTOGRAPHY SECTION ──────────────────────────────────────── */
+  .photo-intro {
+    max-width: 580px;
+    margin-bottom: 56px;
+  }
+
+  /* Category filter tabs */
+  .photo-filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .filter-btn {
+    padding: 7px 18px;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    border: 1.5px solid var(--rule);
+    background: transparent; color: var(--mid);
+    border-radius: 2px; cursor: pointer;
+    transition: all 0.2s; font-family: var(--sans);
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--green); color: var(--green);
+    background: var(--green-l);
+  }
+
+  /* Masonry grid */
+  .photo-grid {
+    columns: 3;
+    column-gap: 12px;
+  }
+  .photo-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .photo-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .photo-item:hover img { transform: scale(1.03); }
+  .photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(28,28,30,0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex; align-items: flex-end;
+    padding: 16px;
+  }
+  @media (hover: hover) {
+    .photo-item:hover .photo-overlay { opacity: 1; }
+  }
+  .photo-mobile-caption {
+    display: none;
+    padding: 10px 12px;
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+  }
+  .photo-mobile-caption .photo-cat {
+    color: var(--green);
+    margin-bottom: 2px;
+  }
+  .photo-mobile-caption .photo-caption {
+    color: var(--mid);
+    font-size: 0.75rem;
+  }
+  .photo-caption {
+    font-size: 0.72rem; color: rgba(255,255,255,0.9);
+    font-weight: 400; letter-spacing: 0.04em;
+    font-family: var(--sans);
+  }
+  .photo-cat { color: rgba(255,255,255,0.6); margin-bottom: 3px; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(10,10,10,0.95);
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 85vh;
+    object-fit: contain; border-radius: 2px;
+  }
+  .lightbox-caption {
+    margin-top: 16px; font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    font-family: var(--sans); letter-spacing: 0.05em;
+  }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-size: 1.4rem; color: rgba(255,255,255,0.6);
+    cursor: pointer; background: none; border: none;
+    font-family: var(--sans); line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: white; }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: none; border: none;
+    font-size: 2rem; color: rgba(255,255,255,0.5);
+    cursor: pointer; padding: 16px; transition: color 0.2s;
+    font-family: var(--sans);
+  }
+  .lightbox-nav:hover { color: white; }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+
+  /* Pano item spans full width */
+  .photo-item.pano { column-span: all; margin-bottom: 12px; }
+  .photo-item.pano img { height: 260px; object-fit: cover; object-position: center; width: 100%; }
+
+  @media (max-width: 800px) {
+    .photo-grid { columns: 2; }
+    .photo-item.pano img { height: 160px; }
+  }
+  @media (max-width: 500px) {
+    .photo-grid { columns: 1; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Joseph <span>K</span></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#photography">Photography</a></li>
+    <li><a href="#presence">Content</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Creative Marketer · Nairobi, Kenya</span>
+    </div>
+    <h1>Where <em>strategy</em><br>meets craft.</h1>
+    <p class="hero-sub">Creative marketer with a rare blend of strategy and hands-on execution. I build campaigns, content systems, and AI-powered tools that drive real results. Certified in Meta and Google Ads, with deep expertise in copywriting, SEO, and email marketing.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-solid">View My Work</a>
+      <a href="#contact" class="btn-ghost">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-n">$10k</div>
+      <div class="stat-l">Monthly Google Ads spend managed for clients</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-n">3+</div>
+        <div class="stat-l">Platforms built &amp; launched live</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">AI</div>
+        <div class="stat-l">Native — campaigns &amp; tools</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="tinted" id="skills">
+  <div class="reveal">
+    <div class="sec-label"><div class="line"></div><span>Capabilities</span></div>
+    <h2 class="sec-title">A full-stack marketing skill set.</h2>
+  </div>
+  <div class="reveal">
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th>Paid Media</th>
+          <th>Content &amp; Copy</th>
+          <th>Creative</th>
+          <th>Strategy &amp; Tools</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-label="Paid Media">Google Ads</td><td data-label="Content &amp; Copy">Copywriting</td><td data-label="Creative">Video Production</td><td data-label="Strategy &amp; Tools">SEO &amp; Growth</td></tr>
+        <tr><td data-label="Paid Media">Meta Ads (FB/IG)</td><td data-label="Content &amp; Copy">Email Marketing</td><td data-label="Creative">Photography</td><td data-label="Strategy &amp; Tools">Analytics &amp; CRO</td></tr>
+        <tr><td data-label="Paid Media">Google Display</td><td data-label="Content &amp; Copy">Cold Outreach</td><td data-label="Creative">Brand Storytelling</td><td data-label="Strategy &amp; Tools">AI Marketing Tools</td></tr>
+        <tr><td data-label="Paid Media">Campaign Optimisation</td><td data-label="Content &amp; Copy">Content Strategy</td><td data-label="Creative">Filmmaking</td><td data-label="Strategy &amp; Tools">Conversion Strategy</td></tr>
+        <tr><td data-label="Paid Media">Cold Emailing</td><td data-label="Content &amp; Copy">Audience Building</td><td data-label="Creative">Creative Direction</td><td data-label="Strategy &amp; Tools">Market Research</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY -->
+<section id="photography">
+  <div class="reveal">
+    <div class="sec-label"><div class="line"></div><span>Photography &amp; Film</span></div>
+    <h2 class="sec-title">The creative eye behind the camera.</h2>
+    <p class="photo-intro" style="font-size:0.94rem;color:var(--mid);line-height:1.75;font-weight:300;margin-bottom:40px;">
+      From wildlife in the Mara to fashion portraits in Nairobi, cinematic film sets to dusk at the lakeshore — this is the visual work that sits behind everything I build.
+    </p>
+  </div>
+
+  <div class="photo-filters reveal">
+    <button class="filter-btn active" onclick="filterPhotos('all', this)">All</button>
+    <button class="filter-btn" onclick="filterPhotos('wildlife', this)">Wildlife</button>
+    <button class="filter-btn" onclick="filterPhotos('portrait', this)">Portraits</button>
+    <button class="filter-btn" onclick="filterPhotos('film', this)">Film &amp; BTS</button>
+    <button class="filter-btn" onclick="filterPhotos('landscape', this)">Landscapes</button>
+    <button class="filter-btn" onclick="filterPhotos('fashion', this)">Fashion</button>
+  </div>
+
+  <div class="photo-grid reveal" id="photoGrid">
+
+    <!-- WILDLIFE -->
+    <div class="photo-item" data-cat="wildlife" data-caption="Leopard cub, Maasai Mara" onclick="openLightbox(this)">
+      <img src="4A1A3921-2.jpg" alt="Leopard in the bush" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Leopard cub, Maasai Mara</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Leopard cub, Maasai Mara</div></div>
+    </div>
+
+    <!-- PORTRAIT -->
+    <div class="photo-item" data-cat="portrait" data-caption="Portrait, Nairobi" onclick="openLightbox(this)">
+      <img src="20170810-IMG_7074.jpg" alt="Portrait" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Portrait</div><div class="photo-caption">Portrait, Nairobi</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Portrait</div><div class="photo-caption">Portrait, Nairobi</div></div>
+    </div>
+
+    <!-- WILDLIFE -->
+    <div class="photo-item" data-cat="wildlife" data-caption="Lioness at golden hour, Mara" onclick="openLightbox(this)">
+      <img src="4A1A4890-2.jpg" alt="Lioness golden hour" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness, golden hour</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness, golden hour</div></div>
+    </div>
+
+    <!-- FILM BTS -->
+    <div class="photo-item" data-cat="film" data-caption="On set, documentary shoot" onclick="openLightbox(this)">
+      <img src="7.jpg" alt="Film set BTS" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">On set, documentary shoot</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">On set, documentary shoot</div></div>
+    </div>
+
+    <!-- WILDLIFE -->
+    <div class="photo-item" data-cat="wildlife" data-caption="Lion cub, Maasai Mara" onclick="openLightbox(this)">
+      <img src="IMG_4248.jpg" alt="Lion cub" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lion cub, Maasai Mara</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lion cub, Maasai Mara</div></div>
+    </div>
+
+    <!-- FILM BTS -->
+    <div class="photo-item" data-cat="film" data-caption="Interview setup, lodge shoot" onclick="openLightbox(this)">
+      <img src="9.jpg" alt="Film BTS lodge" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">Interview setup, lodge</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">Interview setup, lodge</div></div>
+    </div>
+
+    <!-- DOCUMENTARY / PORTRAIT -->
+    <div class="photo-item" data-cat="portrait" data-caption="Classroom, documentary series" onclick="openLightbox(this)">
+      <img src="160A9181.jpg" alt="Classroom documentary" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Documentary</div><div class="photo-caption">Classroom, documentary series</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Documentary</div><div class="photo-caption">Classroom, documentary series</div></div>
+    </div>
+
+    <!-- LANDSCAPE -->
+    <div class="photo-item" data-cat="landscape" data-caption="Misty forest hills" onclick="openLightbox(this)">
+      <img src="2016-19.jpg" alt="Forest landscape" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Landscape</div><div class="photo-caption">Misty forest hills</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Landscape</div><div class="photo-caption">Misty forest hills</div></div>
+    </div>
+
+    <!-- PORTRAIT -->
+    <div class="photo-item" data-cat="portrait" data-caption="Portrait, forest light" onclick="openLightbox(this)">
+      <img src="20170617-IMG_4980.jpg" alt="Portrait forest" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Portrait</div><div class="photo-caption">Portrait, forest light</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Portrait</div><div class="photo-caption">Portrait, forest light</div></div>
+    </div>
+
+    <!-- FASHION -->
+    <div class="photo-item" data-cat="fashion" data-caption="Fashion editorial, Nairobi" onclick="openLightbox(this)">
+      <img src="IMG_4409.jpg" alt="Fashion portrait" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion editorial, Nairobi</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion editorial, Nairobi</div></div>
+    </div>
+
+    <!-- PORTRAIT -->
+    <div class="photo-item" data-cat="portrait" data-caption="Nairobi nights" onclick="openLightbox(this)">
+      <img src="IMG_5250.jpg" alt="Nairobi night portrait" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Portrait</div><div class="photo-caption">Nairobi nights</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Portrait</div><div class="photo-caption">Nairobi nights</div></div>
+    </div>
+
+    <!-- FASHION -->
+    <div class="photo-item" data-cat="fashion" data-caption="Made in Kenya, fashion shoot" onclick="openLightbox(this)">
+      <img src="IMG_5298.jpg" alt="Made in Kenya fashion" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Fashion</div><div class="photo-caption">Made in Kenya</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">Made in Kenya</div></div>
+    </div>
+
+    <!-- FASHION -->
+    <div class="photo-item" data-cat="fashion" data-caption="Ankara fashion, Nairobi" onclick="openLightbox(this)">
+      <img src="IMG_5370.jpg" alt="Ankara fashion shoot" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Fashion</div><div class="photo-caption">Ankara fashion, Nairobi</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">Ankara fashion, Nairobi</div></div>
+    </div>
+
+    <!-- LANDSCAPE -->
+    <div class="photo-item" data-cat="landscape" data-caption="Dusk at the lakeshore" onclick="openLightbox(this)">
+      <img src="IMG_5538.jpeg" alt="Lakeshore dusk" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Landscape</div><div class="photo-caption">Dusk at the lakeshore</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Landscape</div><div class="photo-caption">Dusk at the lakeshore</div></div>
+    </div>
+
+    <!-- FASHION (b&w) -->
+    <div class="photo-item" data-cat="fashion" data-caption="B&W fashion, Nairobi Railway" onclick="openLightbox(this)">
+      <img src="2016-1.jpg" alt="BW fashion portrait" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
+    </div>
+
+    <!-- PANO LANDSCAPE spans all columns -->
+    <div class="photo-item pano" data-cat="landscape" data-caption="Panoramic landscape" onclick="openLightbox(this)">
+      <img src="_MG_7142-Pano-2.jpg" alt="Panoramic landscape" loading="lazy"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8592;</button>
+  <img id="lightboxImg" src="" alt=""/>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8594;</button>
+</div>
+
+
+
+<!-- WORK -->
+<section id="work">
+  <div class="reveal">
+    <div class="sec-label"><div class="line"></div><span>Selected Work</span></div>
+    <h2 class="sec-title">Campaigns, platforms, and content I've built.</h2>
+  </div>
+  <div class="work-grid">
+
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">AI SaaS · Live Product</div>
+        <h3>OctoMarketer</h3>
+        <p>Built and launched a live AI marketing platform unifying Google Ads, YouTube, and cold email into one intelligent workflow. Integrated multiple AI models for copy generation, audience targeting, and campaign insights. Shipped entirely independently.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">Google Ads API</span><span class="chip">YouTube API</span><span class="chip">OpenRouter</span></div>
+        <a href="https://octomarketer.com" target="_blank" class="card-link">Visit</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">Paid Media · Client Work</div>
+        <h3>Google Ads Management</h3>
+        <p>Managed Google Ads campaigns with up to $10,000/month in spend across client accounts. Handled keyword strategy, ad copy, bid optimisation, and performance reporting across multiple industries.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">Search</span><span class="chip">Display</span><span class="chip">CRO</span><span class="chip">Reporting</span></div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">AI Automation · Nonprofit</div>
+        <h3>Ustawi Donor Outreach</h3>
+        <p>Designed an end-to-end AI-powered cold email system for donor acquisition. LLM-generated personalisation matched to donor profiles, delivered at scale — cutting manual effort while preserving quality.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">LLMs</span><span class="chip">Cold Email</span><span class="chip">Automation</span></div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">Brand &amp; Content</div>
+        <h3>Thriving in Chaos Network</h3>
+        <p>Built the organisation's website and developed a full content strategy across web and social. Produced photography and video assets that established the brand's visual identity from the ground up.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">Website</span><span class="chip">Photography</span><span class="chip">Content Strategy</span></div>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">E-commerce · Instagram</div>
+        <h3>Tabasamu Brand</h3>
+        <p>Managed the Instagram presence for @shoptabasamu, producing brand photography and creative content to shape the brand's visual identity and drive audience engagement.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">Instagram</span><span class="chip">Photography</span><span class="chip">Brand Content</span></div>
+        <a href="https://www.instagram.com/shoptabasamu/" target="_blank" class="card-link">View</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout reveal">
+    <div class="callout-stripe"></div>
+    <div class="callout-body">
+      <div class="callout-label">What Sets Me Apart</div>
+      <p>I do not just run campaigns. I build the systems behind them. From paid ads and email funnels to AI tools and full web rebuilds, I connect every channel and ship the infrastructure that makes the whole strategy work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="tinted" id="experience">
+  <div class="reveal">
+    <div class="sec-label"><div class="line"></div><span>Experience</span></div>
+    <h2 class="sec-title">Where I've worked and what I've delivered.</h2>
+  </div>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-date">Nov 2025 – Present</div>
+      <div class="tl-right">
+        <h4>Freelance Digital Marketer &amp; Developer</h4>
+        <div class="tl-org">Independent</div>
+        <ul>
+          <li>Managed Google Ads campaigns up to $10k/month across client accounts</li>
+          <li>Built and launched OctoMarketer, a live AI SaaS marketing platform</li>
+          <li>Delivered end-to-end engagements: paid ads, websites, CRM, content</li>
+          <li>Built the Thriving in Chaos Network website and content strategy, producing photography and video for the brand</li>
+          <li>Led Growth Through Learning's full web presence rebuild: designed conversion funnels, ran paid ads, built email sequences and automated donor journeys</li>
+          <li>Developed Looker Studio dashboards to track and report on campaign performance across channels</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Mar 2025 – Jul 2025</div>
+      <div class="tl-right">
+        <h4>AI Marketing Consultant</h4>
+        <div class="tl-org">Ustawi Network</div>
+        <ul>
+          <li>Built AI-powered donor cold email system with LLM personalisation</li>
+          <li>Scaled outreach without adding headcount via automated pipelines</li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+
+<!-- PRESENCE -->
+<section id="presence">
+  <div class="reveal">
+    <div class="sec-label"><div class="line"></div><span>Online Presence</span></div>
+    <h2 class="sec-title">Where you can find my work.</h2>
+  </div>
+  <div class="presence-grid reveal">
+    <a href="https://octomarketer.com" target="_blank" class="pcard">
+      <div class="pcard-plat">SaaS Product</div>
+      <div class="pcard-name">OctoMarketer</div>
+      <div class="pcard-desc">Live AI marketing platform — Google Ads, YouTube, and cold email unified.</div>
+    </a>
+    <a href="https://www.instagram.com/shoptabasamu/" target="_blank" class="pcard">
+      <div class="pcard-plat">Instagram · E-commerce</div>
+      <div class="pcard-name">@shoptabasamu</div>
+      <div class="pcard-desc">Brand photography and creative content for the Tabasamu brand.</div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="tinted" id="contact">
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <div class="sec-label" style="margin-bottom:20px"><div class="line"></div><span>Contact</span></div>
+      <h2>Let's build something worth remembering.</h2>
+      <p>Whether you need a campaign that converts, a content system that scales, or an AI-powered marketing tool — I bring both creative instinct and technical execution.</p>
+      <a href="mailto:josephkcreative@gmail.com" class="contact-email">josephkcreative@gmail.com</a>
+    </div>
+    <div class="contact-rows reveal">
+      <div class="crow"><span class="crow-label">Phone</span><a href="tel:+254708718283" class="crow-val">+254-708-718-283</a></div>
+      <div class="crow"><span class="crow-label">Location</span><span class="crow-val">Nairobi, Kenya</span></div>
+      <div class="crow"><span class="crow-label">Portfolio</span><a href="https://josephkcv.onrender.com" target="_blank" class="crow-val">josephkcv.onrender.com</a></div>
+      <div class="crow"><span class="crow-label">Product</span><a href="https://octomarketer.com" target="_blank" class="crow-val">octomarketer.com</a></div>
+      <div class="crow"><span class="crow-label">Available for</span><span class="crow-val">Full-time · Freelance · Contract</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Joseph K</span>
+  <span>Creative Marketer · Nairobi, Kenya</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ── MOBILE NAV ────────────────────────────────────────────────
+  const mainNav = document.getElementById('mainNav');
+  const navToggle = document.getElementById('navToggle');
+  function closeNav() {
+    mainNav.classList.remove('is-open');
+    document.body.classList.remove('nav-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open menu');
+  }
+  navToggle.addEventListener('click', () => {
+    const open = mainNav.classList.toggle('is-open');
+    document.body.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', closeNav);
+  });
+
+  // ── PHOTO GALLERY ─────────────────────────────────────────────
+  let visibleItems = [];
+  let currentIdx = 0;
+
+  function filterPhotos(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const items = document.querySelectorAll('.photo-item');
+    items.forEach(item => {
+      if (cat === 'all' || item.dataset.cat === cat) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  function openLightbox(el) {
+    visibleItems = Array.from(document.querySelectorAll('.photo-item:not([style*="display: none"])')).filter(i => !i.classList.contains('pano'));
+    const nonPanoEl = el.classList.contains('pano') ? null : el;
+    if (!nonPanoEl) return; // don't lightbox pano
+    currentIdx = visibleItems.indexOf(el);
+    showLightboxItem(currentIdx);
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxItem(idx) {
+    const item = visibleItems[idx];
+    if (!item) return;
+    document.getElementById('lightboxImg').src = item.querySelector('img').src;
+    document.getElementById('lightboxCaption').textContent = item.dataset.caption || '';
+  }
+
+  function navLightbox(dir) {
+    currentIdx = (currentIdx + dir + visibleItems.length) % visibleItems.length;
+    showLightboxItem(currentIdx);
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOutside(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') navLightbox(1);
+    if (e.key === 'ArrowLeft') navLightbox(-1);
+  });
+
+  // Touch swipe for lightbox on mobile
+  let touchStartX = 0;
+  const lightboxEl = document.getElementById('lightbox');
+  lightboxEl.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  lightboxEl.addEventListener('touchend', e => {
+    if (!lightboxEl.classList.contains('open')) return;
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) > 50) navLightbox(diff > 0 ? -1 : 1);
+  }, { passive: true });
+
+</script>
+</body>
+</html>
