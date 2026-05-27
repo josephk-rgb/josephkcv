@@ -437,14 +437,35 @@
     background: var(--white);
     position: relative;
     overflow: hidden;
-    transition: border-color 0.2s;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: border-color 0.2s, transform 0.25s ease, box-shadow 0.25s ease;
   }
   .dash-kpi:hover { border-color: var(--green); }
+  .dash-animate .dash-kpi:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(42, 92, 69, 0.1);
+  }
   .dash-kpi::after {
     content: '';
     position: absolute; left: 0; top: 0; bottom: 0;
     width: 3px; background: var(--green);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .dash-animate .dash-kpi::after { transform: scaleY(1); }
+  .dash-animate .dash-kpi {
+    animation: dashSlideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .dash-animate .dash-kpi:nth-child(1) { animation-delay: 0.05s; }
+  .dash-animate .dash-kpi:nth-child(1)::after { transition-delay: 0.15s; }
+  .dash-animate .dash-kpi:nth-child(2) { animation-delay: 0.12s; }
+  .dash-animate .dash-kpi:nth-child(2)::after { transition-delay: 0.22s; }
+  .dash-animate .dash-kpi:nth-child(3) { animation-delay: 0.19s; }
+  .dash-animate .dash-kpi:nth-child(3)::after { transition-delay: 0.29s; }
+  .dash-animate .dash-kpi:nth-child(4) { animation-delay: 0.26s; }
+  .dash-animate .dash-kpi:nth-child(4)::after { transition-delay: 0.36s; }
   .dash-kpi-n {
     font-family: var(--serif);
     font-size: clamp(1.6rem, 2.2vw, 2.2rem);
@@ -467,7 +488,16 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--mid);
+    opacity: 0;
+    transform: translateY(6px);
   }
+  .dash-animate .dash-kpi-badge {
+    animation: dashFadeUp 0.4s ease forwards;
+  }
+  .dash-animate .dash-kpi:nth-child(1) .dash-kpi-badge { animation-delay: 0.35s; }
+  .dash-animate .dash-kpi:nth-child(2) .dash-kpi-badge { animation-delay: 0.42s; }
+  .dash-animate .dash-kpi:nth-child(3) .dash-kpi-badge { animation-delay: 0.49s; }
+  .dash-animate .dash-kpi:nth-child(4) .dash-kpi-badge { animation-delay: 0.56s; }
 
   .dash-main {
     display: grid;
@@ -479,7 +509,14 @@
     border-radius: 3px;
     background: var(--white);
     overflow: hidden;
+    opacity: 0;
+    transform: translateY(22px);
   }
+  .dash-animate .dash-panel {
+    animation: dashSlideUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .dash-animate .dash-main .dash-panel:nth-child(1) { animation-delay: 0.3s; }
+  .dash-animate .dash-main .dash-panel:nth-child(2) { animation-delay: 0.45s; }
   .dash-panel-head {
     display: flex;
     align-items: center;
@@ -495,6 +532,10 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--rule);
+  }
+  .dash-animate .dash-panel-dots span:first-child {
+    background: var(--green);
+    animation: dashLivePulse 2.4s ease-in-out infinite;
   }
   .dash-panel-title {
     font-size: 0.68rem;
@@ -525,17 +566,24 @@
     stroke-linejoin: round;
     stroke-dasharray: 600;
     stroke-dashoffset: 600;
-    transition: stroke-dashoffset 0.8s ease;
+    transition: stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
   }
   .dash-chart-area {
     fill: rgba(42, 92, 69, 0.12);
     opacity: 0;
-    transition: opacity 0.6s ease 0.4s;
+    clip-path: inset(100% 0 0 0);
+    transition: opacity 0.5s ease 0.7s, clip-path 1s cubic-bezier(0.22, 1, 0.36, 1) 0.55s;
   }
   .dash-chart-grid line {
     stroke: var(--rule);
     stroke-width: 1;
+    stroke-dasharray: 480;
+    stroke-dashoffset: 480;
+    transition: stroke-dashoffset 0.7s ease;
   }
+  .dash-animate .dash-chart-grid line:nth-child(1) { stroke-dashoffset: 0; transition-delay: 0.2s; }
+  .dash-animate .dash-chart-grid line:nth-child(2) { stroke-dashoffset: 0; transition-delay: 0.32s; }
+  .dash-animate .dash-chart-grid line:nth-child(3) { stroke-dashoffset: 0; transition-delay: 0.44s; }
   .dash-chart-labels {
     display: flex;
     justify-content: space-between;
@@ -545,7 +593,20 @@
     letter-spacing: 0.04em;
   }
   .dash-animate .dash-chart-line { stroke-dashoffset: 0; }
-  .dash-animate .dash-chart-area { opacity: 1; }
+  .dash-animate .dash-chart-area { opacity: 1; clip-path: inset(0 0 0 0); }
+  .dash-chart-labels span {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  .dash-animate .dash-chart-labels span {
+    animation: dashFadeUp 0.35s ease forwards;
+  }
+  .dash-animate .dash-chart-labels span:nth-child(1) { animation-delay: 1.1s; }
+  .dash-animate .dash-chart-labels span:nth-child(2) { animation-delay: 1.18s; }
+  .dash-animate .dash-chart-labels span:nth-child(3) { animation-delay: 1.26s; }
+  .dash-animate .dash-chart-labels span:nth-child(4) { animation-delay: 1.34s; }
+  .dash-animate .dash-chart-labels span:nth-child(5) { animation-delay: 1.42s; }
+  .dash-animate .dash-chart-labels span:nth-child(6) { animation-delay: 1.5s; }
 
   .dash-channels-title {
     font-size: 0.68rem;
@@ -566,7 +627,15 @@
     align-items: center;
     gap: 12px;
     margin-bottom: 14px;
+    opacity: 0;
+    transform: translateX(-8px);
   }
+  .dash-animate .dash-bar-row {
+    animation: dashBarRowIn 0.45s ease forwards;
+  }
+  .dash-animate .dash-bar-row:nth-child(3) { animation-delay: 0.55s; }
+  .dash-animate .dash-bar-row:nth-child(4) { animation-delay: 0.68s; }
+  .dash-animate .dash-bar-row:nth-child(5) { animation-delay: 0.81s; }
   .dash-bar-row:last-child { margin-bottom: 0; }
   .dash-bar-label {
     flex: 0 0 72px;
@@ -587,8 +656,11 @@
     border-radius: 2px;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.7s ease;
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .dash-animate .dash-bar-row:nth-child(3) .dash-bar-fill { transition-delay: 0.65s; }
+  .dash-animate .dash-bar-row:nth-child(4) .dash-bar-fill { transition-delay: 0.78s; }
+  .dash-animate .dash-bar-row:nth-child(5) .dash-bar-fill { transition-delay: 0.91s; }
   .dash-animate .dash-bar-fill { transform: scaleX(1); }
   .dash-bar-pct {
     flex: 0 0 32px;
@@ -608,6 +680,21 @@
     border-radius: 3px;
     background: var(--white);
     text-align: center;
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    transition: border-color 0.2s, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .dash-animate .dash-metric {
+    animation: dashMetricIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .dash-animate .dash-metric:nth-child(1) { animation-delay: 0.85s; }
+  .dash-animate .dash-metric:nth-child(2) { animation-delay: 0.95s; }
+  .dash-animate .dash-metric:nth-child(3) { animation-delay: 1.05s; }
+  .dash-animate .dash-metric:nth-child(4) { animation-delay: 1.15s; }
+  .dash-animate .dash-metric:hover {
+    transform: translateY(-2px) scale(1);
+    border-color: var(--green);
+    box-shadow: 0 8px 20px rgba(42, 92, 69, 0.08);
   }
   .dash-metric-n {
     font-family: var(--serif);
@@ -632,7 +719,16 @@
     padding: 2px 8px;
     border-radius: 2px;
     letter-spacing: 0.04em;
+    opacity: 0;
+    transform: scale(0.7);
   }
+  .dash-animate .dash-metric-delta {
+    animation: dashDeltaPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .dash-animate .dash-metric:nth-child(1) .dash-metric-delta { animation-delay: 1.15s; }
+  .dash-animate .dash-metric:nth-child(2) .dash-metric-delta { animation-delay: 1.25s; }
+  .dash-animate .dash-metric:nth-child(3) .dash-metric-delta { animation-delay: 1.35s; }
+  .dash-animate .dash-metric:nth-child(4) .dash-metric-delta { animation-delay: 1.45s; }
   .dash-metric-delta.up {
     color: var(--green);
     background: var(--green-l);
@@ -640,6 +736,44 @@
   .dash-metric-delta.down {
     color: #8B3A3A;
     background: #F5EDED;
+  }
+
+  @keyframes dashSlideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes dashFadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes dashMetricIn {
+    from { opacity: 0; transform: scale(0.9) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes dashBarRowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes dashDeltaPop {
+    from { opacity: 0; transform: scale(0.7); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes dashLivePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.55; transform: scale(0.85); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dash-kpi, .dash-panel, .dash-bar-row, .dash-metric,
+    .dash-kpi-badge, .dash-chart-labels span, .dash-metric-delta {
+      opacity: 1; transform: none; animation: none !important;
+    }
+    .dash-kpi::after { transform: scaleY(1); }
+    .dash-chart-line { stroke-dashoffset: 0; transition: none; }
+    .dash-chart-area { opacity: 1; clip-path: none; transition: none; }
+    .dash-chart-grid line { stroke-dashoffset: 0; transition: none; }
+    .dash-bar-fill { transform: scaleX(1); transition: none; }
+    .dash-panel-dots span:first-child { animation: none; background: var(--rule); }
   }
 
   /* ── RESPONSIVE ───────────────────────────────────────────────── */
@@ -1045,6 +1179,15 @@
       <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness at golden hour</div></div>
     </div>
 
+    <!-- PANO LANDSCAPE -->
+    <div class="photo-item pano" data-cat="landscape" data-caption="Panoramic landscape" onclick="openLightbox(this)">
+      <img src="_MG_7142-Pano-2.jpg" alt="Panoramic landscape" loading="eager"/>
+      <div class="photo-overlay">
+        <div><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
+      </div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
+    </div>
+
     <!-- LANDSCAPE -->
     <div class="photo-item" data-cat="landscape" data-caption="Misty forest hills" onclick="openLightbox(this)">
       <img src="2016-19.jpg" alt="Forest landscape" loading="lazy"/>
@@ -1106,15 +1249,6 @@
         <div><div class="photo-cat">Landscape</div><div class="photo-caption">Dusk at the lakeshore</div></div>
       </div>
       <div class="photo-mobile-caption"><div class="photo-cat">Landscape</div><div class="photo-caption">Dusk at the lakeshore</div></div>
-    </div>
-
-    <!-- PANO LANDSCAPE -->
-    <div class="photo-item pano" data-cat="landscape" data-caption="Panoramic landscape" onclick="openLightbox(this)">
-      <img src="_MG_7142-Pano-2.jpg" alt="Panoramic landscape" loading="eager"/>
-      <div class="photo-overlay">
-        <div><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
-      </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
     </div>
 
     <!-- DOCUMENTARY -->
@@ -1284,17 +1418,17 @@
           <div class="dash-bar-row">
             <span class="dash-bar-label">Google</span>
             <div class="dash-bar-track"><div class="dash-bar-fill" style="width:52%"></div></div>
-            <span class="dash-bar-pct">52%</span>
+            <span class="dash-bar-pct" data-count="52" data-suffix="%">52%</span>
           </div>
           <div class="dash-bar-row">
             <span class="dash-bar-label">Meta</span>
             <div class="dash-bar-track"><div class="dash-bar-fill" style="width:31%"></div></div>
-            <span class="dash-bar-pct">31%</span>
+            <span class="dash-bar-pct" data-count="31" data-suffix="%">31%</span>
           </div>
           <div class="dash-bar-row">
             <span class="dash-bar-label">Email</span>
             <div class="dash-bar-track"><div class="dash-bar-fill" style="width:17%"></div></div>
-            <span class="dash-bar-pct">17%</span>
+            <span class="dash-bar-pct" data-count="17" data-suffix="%">17%</span>
           </div>
         </div>
       </div>
@@ -1302,22 +1436,22 @@
 
     <div class="dash-metrics">
       <div class="dash-metric">
-        <div class="dash-metric-n">3.2%</div>
+        <div class="dash-metric-n" data-count="3.2" data-suffix="%" data-decimals="1">3.2%</div>
         <div class="dash-metric-l">CTR</div>
         <span class="dash-metric-delta up">+0.4%</span>
       </div>
       <div class="dash-metric">
-        <div class="dash-metric-n">4.8%</div>
+        <div class="dash-metric-n" data-count="4.8" data-suffix="%" data-decimals="1">4.8%</div>
         <div class="dash-metric-l">Conv. Rate</div>
         <span class="dash-metric-delta up">+0.6%</span>
       </div>
       <div class="dash-metric">
-        <div class="dash-metric-n">$24</div>
+        <div class="dash-metric-n" data-count="24" data-prefix="$">$24</div>
         <div class="dash-metric-l">Cost / Conv.</div>
         <span class="dash-metric-delta down">−$3</span>
       </div>
       <div class="dash-metric">
-        <div class="dash-metric-n">2.1×</div>
+        <div class="dash-metric-n" data-count="2.1" data-suffix="×" data-decimals="1">2.1×</div>
         <div class="dash-metric-l">ROAS</div>
         <span class="dash-metric-delta up">+0.2×</span>
       </div>
@@ -1433,25 +1567,41 @@
 <script>
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function animateDashKpis(root) {
-    root.querySelectorAll('[data-count]').forEach(el => {
-      const target = parseInt(el.dataset.count, 10);
-      const prefix = el.dataset.prefix || '';
-      const suffix = el.dataset.suffix || '';
-      if (prefersReducedMotion) {
-        el.textContent = prefix + target + suffix;
-        return;
-      }
-      const duration = 900;
+  function countUp(el, target, opts = {}) {
+    const prefix = opts.prefix || el.dataset.prefix || '';
+    const suffix = opts.suffix || el.dataset.suffix || '';
+    const decimals = opts.decimals ?? (el.dataset.decimals ? parseInt(el.dataset.decimals, 10) : 0);
+    const duration = opts.duration || 900;
+    const delay = opts.delay || 0;
+    const format = v => decimals ? v.toFixed(decimals) : String(Math.round(v));
+
+    if (prefersReducedMotion) {
+      el.textContent = prefix + format(target) + suffix;
+      return;
+    }
+
+    setTimeout(() => {
       const start = performance.now();
       function tick(now) {
         const t = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - t, 3);
-        el.textContent = prefix + Math.round(target * eased) + suffix;
+        el.textContent = prefix + format(target * eased) + suffix;
         if (t < 1) requestAnimationFrame(tick);
       }
-      el.textContent = prefix + '0' + suffix;
+      el.textContent = prefix + format(0) + suffix;
       requestAnimationFrame(tick);
+    }, delay);
+  }
+
+  function animateDashKpis(root) {
+    root.querySelectorAll('.dash-kpi-n[data-count]').forEach((el, i) => {
+      countUp(el, parseFloat(el.dataset.count), { delay: i * 80 });
+    });
+    root.querySelectorAll('.dash-bar-pct[data-count]').forEach((el, i) => {
+      countUp(el, parseInt(el.dataset.count, 10), { delay: 650 + i * 130 });
+    });
+    root.querySelectorAll('.dash-metric-n[data-count]').forEach((el, i) => {
+      countUp(el, parseFloat(el.dataset.count), { delay: 900 + i * 100 });
     });
   }
 
