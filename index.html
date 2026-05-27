@@ -414,6 +414,234 @@
   }
   .reveal.visible { opacity: 1; transform: none; }
 
+  /* ── ANALYTICS DASHBOARD ──────────────────────────────────────── */
+  .dash-intro {
+    font-size: 0.94rem;
+    color: var(--mid);
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 520px;
+    margin: -40px 0 48px;
+  }
+  .dash { display: flex; flex-direction: column; gap: 20px; }
+
+  .dash-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .dash-kpi {
+    padding: 24px 28px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .dash-kpi:hover { border-color: var(--green); }
+  .dash-kpi::after {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--green);
+  }
+  .dash-kpi-n {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .dash-kpi-l {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--mid);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .dash-kpi-badge {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .dash-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+  }
+  .dash-panel {
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  .dash-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--cream);
+  }
+  .dash-panel-dots {
+    display: flex; gap: 5px;
+  }
+  .dash-panel-dots span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+  .dash-panel-title {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .dash-panel-body { padding: 24px 20px; }
+
+  .dash-chart-wrap { position: relative; }
+  .dash-chart-sub {
+    font-size: 0.72rem;
+    color: var(--mid);
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+  .dash-chart-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .dash-chart-line {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    transition: stroke-dashoffset 0.8s ease;
+  }
+  .dash-chart-area {
+    fill: rgba(42, 92, 69, 0.12);
+    opacity: 0;
+    transition: opacity 0.6s ease 0.4s;
+  }
+  .dash-chart-grid line {
+    stroke: var(--rule);
+    stroke-width: 1;
+  }
+  .dash-chart-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.65rem;
+    color: var(--mid);
+    letter-spacing: 0.04em;
+  }
+  .dash-animate .dash-chart-line { stroke-dashoffset: 0; }
+  .dash-animate .dash-chart-area { opacity: 1; }
+
+  .dash-channels-title {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+  .dash-channels-sub {
+    font-size: 0.72rem;
+    color: var(--mid);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .dash-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .dash-bar-row:last-child { margin-bottom: 0; }
+  .dash-bar-label {
+    flex: 0 0 72px;
+    font-size: 0.75rem;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .dash-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--green-l);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .dash-bar-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s ease;
+  }
+  .dash-animate .dash-bar-fill { transform: scaleX(1); }
+  .dash-bar-pct {
+    flex: 0 0 32px;
+    font-size: 0.72rem;
+    color: var(--mid);
+    text-align: right;
+  }
+
+  .dash-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .dash-metric {
+    padding: 18px 20px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--white);
+    text-align: center;
+  }
+  .dash-metric-n {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .dash-metric-l {
+    margin-top: 4px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .dash-metric-delta {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+  .dash-metric-delta.up {
+    color: var(--green);
+    background: var(--green-l);
+  }
+  .dash-metric-delta.down {
+    color: #8B3A3A;
+    background: #F5EDED;
+  }
+
   /* ── RESPONSIVE ───────────────────────────────────────────────── */
   @media (max-width: 800px) {
     nav { padding: 12px 20px; padding-top: max(12px, env(safe-area-inset-top)); }
@@ -495,6 +723,14 @@
     .photo-overlay { display: none; }
     .photo-mobile-caption { display: block; }
     body.nav-open { overflow: hidden; }
+    .dash-kpis { grid-template-columns: repeat(2, 1fr); }
+    .dash-main { grid-template-columns: 1fr; }
+    .dash-metrics { grid-template-columns: repeat(2, 1fr); }
+    .dash-chart-wrap { min-height: 180px; }
+  }
+  @media (max-width: 480px) {
+    .dash-kpis { grid-template-columns: 1fr; }
+    .dash-metrics { grid-template-columns: 1fr; }
   }
 
   /* ── PHOTOGRAPHY SECTION ──────────────────────────────────────── */
@@ -659,6 +895,7 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#photography">Photography</a></li>
     <li><a href="#work">Work</a></li>
+    <li><a href="#analytics">Analytics</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#presence">Content</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -764,12 +1001,12 @@
     </div>
 
     <!-- WILDLIFE -->
-    <div class="photo-item" data-cat="wildlife" data-caption="Lioness at golden hour, Mara" onclick="openLightbox(this)">
-      <img src="4A1A4890-2.jpg" alt="Lioness golden hour" loading="lazy"/>
+    <div class="photo-item" data-cat="wildlife" data-caption="Lion cub with zebra hide, Maasai Mara" onclick="openLightbox(this)">
+      <img src="4A1A4890-2.jpg" alt="Lion cub with zebra hide" loading="lazy"/>
       <div class="photo-overlay">
-        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness, golden hour</div></div>
+        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lion cub with zebra hide</div></div>
       </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness, golden hour</div></div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lion cub with zebra hide</div></div>
     </div>
 
     <!-- FILM BTS -->
@@ -781,13 +1018,13 @@
       <div class="photo-mobile-caption"><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">On set, documentary shoot</div></div>
     </div>
 
-    <!-- WILDLIFE -->
-    <div class="photo-item" data-cat="wildlife" data-favorite="true" data-caption="Lion cub, Maasai Mara" onclick="openLightbox(this)">
-      <img src="IMG_4248.jpg" alt="Lion cub" loading="lazy"/>
+    <!-- PORTRAIT -->
+    <div class="photo-item" data-cat="portrait" data-favorite="true" data-caption="Editorial portrait, outdoor" onclick="openLightbox(this)">
+      <img src="IMG_4248.jpg" alt="Editorial portrait" loading="lazy"/>
       <div class="photo-overlay">
-        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lion cub, Maasai Mara</div></div>
+        <div><div class="photo-cat">Portrait</div><div class="photo-caption">Editorial portrait, outdoor</div></div>
       </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lion cub, Maasai Mara</div></div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Portrait</div><div class="photo-caption">Editorial portrait, outdoor</div></div>
     </div>
 
     <!-- FILM BTS -->
@@ -799,13 +1036,13 @@
       <div class="photo-mobile-caption"><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">Interview setup, lodge</div></div>
     </div>
 
-    <!-- DOCUMENTARY / PORTRAIT -->
-    <div class="photo-item" data-cat="portrait" data-caption="Classroom, documentary series" onclick="openLightbox(this)">
-      <img src="160A9181.jpg" alt="Classroom documentary" loading="lazy"/>
+    <!-- WILDLIFE -->
+    <div class="photo-item" data-cat="wildlife" data-caption="Lioness at golden hour, Maasai Mara" onclick="openLightbox(this)">
+      <img src="160A9181.jpg" alt="Lioness at golden hour" loading="lazy"/>
       <div class="photo-overlay">
-        <div><div class="photo-cat">Documentary</div><div class="photo-caption">Classroom, documentary series</div></div>
+        <div><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness at golden hour</div></div>
       </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Documentary</div><div class="photo-caption">Classroom, documentary series</div></div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Wildlife</div><div class="photo-caption">Lioness at golden hour</div></div>
     </div>
 
     <!-- LANDSCAPE -->
@@ -827,21 +1064,21 @@
     </div>
 
     <!-- FASHION -->
-    <div class="photo-item" data-cat="fashion" data-favorite="true" data-caption="Fashion editorial, Nairobi" onclick="openLightbox(this)">
-      <img src="IMG_4409.jpg" alt="Fashion portrait" loading="lazy"/>
+    <div class="photo-item" data-cat="fashion" data-favorite="true" data-caption="B&amp;W fashion, Nairobi Railway" onclick="openLightbox(this)">
+      <img src="IMG_4409.jpg" alt="BW fashion portrait" loading="lazy"/>
       <div class="photo-overlay">
-        <div><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion editorial, Nairobi</div></div>
+        <div><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
       </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion editorial, Nairobi</div></div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
     </div>
 
-    <!-- PORTRAIT -->
-    <div class="photo-item" data-cat="portrait" data-favorite="true" data-caption="Nairobi nights" onclick="openLightbox(this)">
-      <img src="nairobi-nights-portrait.jpg" alt="Nairobi night portrait" loading="lazy"/>
+    <!-- FASHION -->
+    <div class="photo-item" data-cat="fashion" data-favorite="true" data-caption="Fashion portrait, Nairobi nights" onclick="openLightbox(this)">
+      <img src="nairobi-nights-portrait.jpg" alt="Nairobi night fashion portrait" loading="lazy"/>
       <div class="photo-overlay">
-        <div><div class="photo-cat">Portrait</div><div class="photo-caption">Nairobi nights</div></div>
+        <div><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion portrait, Nairobi nights</div></div>
       </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Portrait</div><div class="photo-caption">Nairobi nights</div></div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">Fashion portrait, Nairobi nights</div></div>
     </div>
 
     <!-- FASHION -->
@@ -880,13 +1117,13 @@
       <div class="photo-mobile-caption"><div class="photo-cat">Landscape · Panoramic</div><div class="photo-caption">Wide landscape panoramic</div></div>
     </div>
 
-    <!-- FASHION (b&w) -->
-    <div class="photo-item" data-cat="fashion" data-caption="B&W fashion, Nairobi Railway" onclick="openLightbox(this)">
-      <img src="2016-1.jpg" alt="BW fashion portrait" loading="lazy"/>
+    <!-- DOCUMENTARY -->
+    <div class="photo-item" data-cat="film" data-caption="Classroom, documentary series" onclick="openLightbox(this)">
+      <img src="2016-1.jpg" alt="Classroom documentary" loading="lazy"/>
       <div class="photo-overlay">
-        <div><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
+        <div><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">Classroom, documentary series</div></div>
       </div>
-      <div class="photo-mobile-caption"><div class="photo-cat">Fashion</div><div class="photo-caption">B&amp;W, Nairobi Railway</div></div>
+      <div class="photo-mobile-caption"><div class="photo-cat">Film &amp; BTS</div><div class="photo-caption">Classroom, documentary series</div></div>
     </div>
 
   </div>
@@ -976,6 +1213,116 @@
       <div class="callout-label">What Sets Me Apart</div>
       <p>I do not just run campaigns. I build the systems behind them. From paid ads and email funnels to AI tools and full web rebuilds, I connect every channel and ship the infrastructure that makes the whole strategy work.</p>
     </div>
+  </div>
+</section>
+
+<!-- ANALYTICS -->
+<section class="tinted" id="analytics">
+  <div class="reveal">
+    <div class="sec-label"><div class="line"></div><span>Performance</span></div>
+    <h2 class="sec-title">I don't guess — I measure.</h2>
+    <p class="dash-intro">Real KPIs from my work. Chart trends below are illustrative sample data.</p>
+  </div>
+  <div class="dash reveal" id="dashRoot">
+
+    <div class="dash-kpis">
+      <div class="dash-kpi">
+        <div class="dash-kpi-n" data-count="10" data-prefix="$" data-suffix="k/mo">$10k/mo</div>
+        <div class="dash-kpi-l">Ad spend managed across client accounts</div>
+        <span class="dash-kpi-badge">↑ real metric</span>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-n" data-count="3" data-suffix="+">3+</div>
+        <div class="dash-kpi-l">Platforms built &amp; launched live</div>
+        <span class="dash-kpi-badge">↑ real metric</span>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-n">3</div>
+        <div class="dash-kpi-l">Google · Meta · Email channels tracked</div>
+        <span class="dash-kpi-badge">↑ real metric</span>
+      </div>
+      <div class="dash-kpi">
+        <div class="dash-kpi-n" style="font-size:clamp(1.2rem,1.8vw,1.6rem)">Looker Studio</div>
+        <div class="dash-kpi-l">Dashboards built for cross-channel reporting</div>
+        <span class="dash-kpi-badge">↑ real metric</span>
+      </div>
+    </div>
+
+    <div class="dash-main">
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <div class="dash-panel-dots"><span></span><span></span><span></span></div>
+          <span class="dash-panel-title">Campaign Overview · Q1–Q2 2026</span>
+        </div>
+        <div class="dash-panel-body">
+          <div class="dash-chart-wrap">
+            <p class="dash-chart-sub">Campaign performance (sample trend data for illustration)</p>
+            <svg class="dash-chart-svg" viewBox="0 0 480 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <g class="dash-chart-grid">
+                <line x1="0" y1="40" x2="480" y2="40"/>
+                <line x1="0" y1="80" x2="480" y2="80"/>
+                <line x1="0" y1="120" x2="480" y2="120"/>
+              </g>
+              <path class="dash-chart-area" d="M0,130 L80,118 L160,105 L240,88 L320,62 L400,45 L480,28 L480,160 L0,160 Z"/>
+              <path class="dash-chart-line" d="M0,130 L80,118 L160,105 L240,88 L320,62 L400,45 L480,28"/>
+            </svg>
+            <div class="dash-chart-labels">
+              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <div class="dash-panel-dots"><span></span><span></span><span></span></div>
+          <span class="dash-panel-title">Channel Mix</span>
+        </div>
+        <div class="dash-panel-body">
+          <div class="dash-channels-title">Spend by channel</div>
+          <p class="dash-channels-sub">Sample allocation for illustration</p>
+          <div class="dash-bar-row">
+            <span class="dash-bar-label">Google</span>
+            <div class="dash-bar-track"><div class="dash-bar-fill" style="width:52%"></div></div>
+            <span class="dash-bar-pct">52%</span>
+          </div>
+          <div class="dash-bar-row">
+            <span class="dash-bar-label">Meta</span>
+            <div class="dash-bar-track"><div class="dash-bar-fill" style="width:31%"></div></div>
+            <span class="dash-bar-pct">31%</span>
+          </div>
+          <div class="dash-bar-row">
+            <span class="dash-bar-label">Email</span>
+            <div class="dash-bar-track"><div class="dash-bar-fill" style="width:17%"></div></div>
+            <span class="dash-bar-pct">17%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-metrics">
+      <div class="dash-metric">
+        <div class="dash-metric-n">3.2%</div>
+        <div class="dash-metric-l">CTR</div>
+        <span class="dash-metric-delta up">+0.4%</span>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-n">4.8%</div>
+        <div class="dash-metric-l">Conv. Rate</div>
+        <span class="dash-metric-delta up">+0.6%</span>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-n">$24</div>
+        <div class="dash-metric-l">Cost / Conv.</div>
+        <span class="dash-metric-delta down">−$3</span>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-n">2.1×</div>
+        <div class="dash-metric-l">ROAS</div>
+        <span class="dash-metric-delta up">+0.2×</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1084,9 +1431,48 @@
 </footer>
 
 <script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animateDashKpis(root) {
+    root.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count, 10);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      if (prefersReducedMotion) {
+        el.textContent = prefix + target + suffix;
+        return;
+      }
+      const duration = 900;
+      const start = performance.now();
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = prefix + Math.round(target * eased) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      el.textContent = prefix + '0' + suffix;
+      requestAnimationFrame(tick);
+    });
+  }
+
+  function animateDashCharts(root) {
+    root.classList.add('dash-animate');
+    if (prefersReducedMotion) {
+      const line = root.querySelector('.dash-chart-line');
+      if (line) line.style.strokeDashoffset = '0';
+    }
+  }
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        if (e.target.id === 'dashRoot') {
+          animateDashKpis(e.target);
+          animateDashCharts(e.target);
+        }
+        obs.unobserve(e.target);
+      }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
