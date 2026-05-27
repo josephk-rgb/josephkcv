@@ -522,21 +522,23 @@
     background: var(--green-l);
   }
 
-  /* Masonry grid */
+  /* Photo grid — 2-row layout for All view */
   .photo-grid {
-    columns: 3;
-    column-gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
   }
   .photo-item {
-    break-inside: avoid;
-    margin-bottom: 12px;
     position: relative;
     overflow: hidden;
     border-radius: 2px;
     cursor: pointer;
   }
+  .photo-item.is-hidden { display: none; }
   .photo-item img {
     width: 100%;
+    height: 200px;
+    object-fit: cover;
     display: block;
     transition: transform 0.4s ease;
   }
@@ -610,16 +612,22 @@
   .lightbox-prev { left: 16px; }
   .lightbox-next { right: 16px; }
 
-  /* Pano item spans full width */
-  .photo-item.pano { column-span: all; margin-bottom: 12px; }
-  .photo-item.pano img { height: 260px; object-fit: cover; object-position: center; width: 100%; }
+  /* Pano spans full width on its row */
+  .photo-item.pano { grid-column: 1 / -1; }
+  .photo-item.pano img { height: 240px; object-fit: cover; object-position: center; width: 100%; }
 
+  @media (max-width: 1200px) {
+    .photo-grid { grid-template-columns: repeat(4, 1fr); }
+    .photo-item img { height: 180px; }
+  }
   @media (max-width: 800px) {
-    .photo-grid { columns: 2; }
-    .photo-item.pano img { height: 160px; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-item img { height: 160px; }
+    .photo-item.pano img { height: 180px; }
   }
   @media (max-width: 500px) {
-    .photo-grid { columns: 1; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-item img { height: 140px; }
   }
 
 </style>
@@ -719,7 +727,7 @@
     <button class="filter-btn" onclick="filterPhotos('fashion', this)">Fashion</button>
   </div>
 
-  <div class="photo-grid reveal" id="photoGrid">
+  <div class="photo-grid" id="photoGrid">
 
     <!-- WILDLIFE -->
     <div class="photo-item" data-cat="wildlife" data-caption="Leopard cub, Maasai Mara" onclick="openLightbox(this)">
@@ -1069,18 +1077,14 @@
   function filterPhotos(cat, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const items = document.querySelectorAll('.photo-item');
-    items.forEach(item => {
-      if (cat === 'all' || item.dataset.cat === cat) {
-        item.style.display = '';
-      } else {
-        item.style.display = 'none';
-      }
+    document.querySelectorAll('.photo-item').forEach(item => {
+      const show = cat === 'all' || item.dataset.cat === cat;
+      item.classList.toggle('is-hidden', !show);
     });
   }
 
   function openLightbox(el) {
-    visibleItems = Array.from(document.querySelectorAll('.photo-item:not([style*="display: none"])')).filter(i => !i.classList.contains('pano'));
+    visibleItems = Array.from(document.querySelectorAll('.photo-item:not(.is-hidden)')).filter(i => !i.classList.contains('pano'));
     const nonPanoEl = el.classList.contains('pano') ? null : el;
     if (!nonPanoEl) return; // don't lightbox pano
     currentIdx = visibleItems.indexOf(el);
