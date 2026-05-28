@@ -282,6 +282,7 @@
   }
   .card-link:hover { gap: 9px; }
   .card-link::after { content: '→'; }
+  .card-links { display: flex; gap: 16px; margin-left: auto; flex-shrink: 0; }
 
   /* ── CALLOUT BAND ─────────────────────────────────────────────── */
   .callout {
@@ -807,6 +808,7 @@
       flex-direction: column; align-items: flex-start; gap: 12px;
     }
     .card-link { margin-left: 0; }
+    .card-links { margin-left: 0; }
     .crow {
       flex-direction: column; align-items: flex-start; gap: 4px;
     }
@@ -1339,6 +1341,33 @@
       </div>
     </div>
 
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">YouTube · Personal Brand</div>
+        <h3>Kinyodah</h3>
+        <p>Building a personal brand on YouTube — marketing OctoMarketer and sharing systems for YouTube growth, social media strategy, and scalable brand building.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">YouTube</span><span class="chip">Personal Brand</span><span class="chip">OctoMarketer</span></div>
+        <a href="https://www.youtube.com/@kinyodah" target="_blank" class="card-link">View</a>
+      </div>
+    </div>
+
+    <div class="card reveal">
+      <div class="card-body">
+        <div class="card-tag">Film &amp; Travel · Personal Content</div>
+        <h3>Joseph Kinyoda</h3>
+        <p>Cinematic travel and adventure content across Kenya — short films, safari footage, camping trips, and personal reels on Instagram.</p>
+      </div>
+      <div class="card-foot">
+        <div class="chips"><span class="chip">YouTube</span><span class="chip">Instagram</span><span class="chip">Filmmaking</span><span class="chip">Travel</span></div>
+        <div class="card-links">
+          <a href="https://www.instagram.com/josephkinyoda/" target="_blank" class="card-link">Instagram</a>
+          <a href="https://www.youtube.com/@josephkinyoda" target="_blank" class="card-link">YouTube</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="callout reveal">
@@ -1536,6 +1565,21 @@
       <div class="pcard-plat">LinkedIn · Nonprofit</div>
       <div class="pcard-name">Growth Through Learning</div>
       <div class="pcard-desc">Web presence, paid ads, email funnels, and content for a global education nonprofit.</div>
+    </a>
+    <a href="https://www.instagram.com/josephkinyoda/" target="_blank" class="pcard">
+      <div class="pcard-plat">Instagram · Personal</div>
+      <div class="pcard-name">@josephkinyoda</div>
+      <div class="pcard-desc">Personal creative profile — filmmaking, travel, and reel content.</div>
+    </a>
+    <a href="https://www.youtube.com/@kinyodah" target="_blank" class="pcard">
+      <div class="pcard-plat">YouTube · Marketing</div>
+      <div class="pcard-name">Kinyodah</div>
+      <div class="pcard-desc">YouTube growth, social media strategy, and personal brand systems.</div>
+    </a>
+    <a href="https://www.youtube.com/@josephkinyoda" target="_blank" class="pcard">
+      <div class="pcard-plat">YouTube · Film &amp; Travel</div>
+      <div class="pcard-name">Joseph Kinyoda</div>
+      <div class="pcard-desc">Short films and cinematic travel — Kenya safaris, camping, and adventure.</div>
     </a>
   </div>
 </section>
